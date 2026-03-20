@@ -8,12 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build with Docker
-        # This MUST be 'docker compose'
+      - name: Build the Docker image
         run: docker compose build
 
-      - name: Up Containers
+      - name: Check Docker status
         run: docker compose up -d
