@@ -3,20 +3,26 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build the Docker image
-        # Note: No hyphen between docker and compose
-        run: docker compose build
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Start containers
-        run: docker compose up -d
+      - name: Build and Start Containers
+        # We use 'docker compose' (SPACE, NO HYPHEN)
+        run: docker compose up -d --build
 
-      - name: Check running containers
-        run: docker ps
+      - name: Check Container Status
+        run: docker compose ps
+
+      - name: View Backend Logs
+        # This helps us see if Django actually started
+        run: docker compose logs web
