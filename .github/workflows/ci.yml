@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build with Docker
-        # NOTICE: This is 'docker compose' (SPACE, NO HYPHEN)
+        # This MUST be 'docker compose'
         run: docker compose build
 
       - name: Up Containers
